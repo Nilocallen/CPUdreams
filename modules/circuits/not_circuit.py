@@ -2,8 +2,8 @@ from modules import circuit, connector
 
 
 class NotCircuit(circuit.Circuit):
-    def __init__(self, name):
-        circuit.Circuit.__init__(self, name)
+    def __init__(self, label):
+        circuit.Circuit.__init__(self, label)
         # self.connectors = list()
         self.inputs.append(connector.Connector(self, 'A', activates=1))
         self.outputs.append(connector.Connector(self, 'B'))

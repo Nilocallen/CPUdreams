@@ -9,9 +9,12 @@
 #
 
 import pyglet as pyg
-from modules import and_circuit, not_circuit
+from modules import resources
+from modules.circuits import not_circuit, and_circuit
+from modules.gui import circuit_store, rectangle_button
 
 
+#   Display & Window Config     #
 display = pyg.canvas.Display()
 screen = display.get_default_screen()
 screen_width = screen.width
@@ -24,18 +27,41 @@ background = pyg.image.SolidColorImagePattern((70, 68, 72, 255)).create_image(sc
 
 main_batch = pyg.graphics.Batch()
 
+# Frame to hold all widgets
+frame = pyg.gui.Frame(app_window)
 
+
+# GUI Elements  #
 x_draw_offset = 30
 y_draw_offset = 20
-circuit_store = pyg.shapes.Rectangle(x_draw_offset, y_draw_offset, screen_width - 2 * x_draw_offset,
-                                     80, color=(46, 45, 47, 255), batch=main_batch)
 
-circuit_name = pyg.gui.TextEntry("Name", x_draw_offset, screen_height - 100, screen_width - 2 * x_draw_offset,
-                                 color=(80, 78, 83, 255), batch=main_batch, text_color=(253, 255, 247, 255))
+circuit_store = circuit_store.CircuitStore(x_draw_offset, y_draw_offset, screen_width, main_batch)
 
-draw_area = pyg.shapes.BorderedRectangle(x_draw_offset, y_draw_offset + 80 + 20, screen_width - 2 * x_draw_offset,
-                                         screen_height - 250, border=10, border_color=(111, 108, 113, 255),
+draw_area = pyg.shapes.BorderedRectangle(x_draw_offset, y_draw_offset + 70, screen_width - 2 * x_draw_offset,
+                                         screen_height - 220, border=10, border_color=(111, 108, 113, 255),
                                          color=(53, 52, 54, 255), batch=main_batch)
+
+button_test = rectangle_button.RectangleButton(50, 50, main_batch, "a")
+button_test2 = rectangle_button.RectangleButton(120, 50, main_batch, "aa")
+button_test3 = rectangle_button.RectangleButton(190, 50, main_batch, "aaa")
+button_test4 = rectangle_button.RectangleButton(260, 50, main_batch, "aaaa")
+button_test5 = rectangle_button.RectangleButton(260, 50, main_batch, "aaaaaaaaaaaaaaaa")
+button_test6 = rectangle_button.RectangleButton(260, 50, main_batch, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+
+
+#   Widgets     #
+circuit_entry_padding = 5
+
+circuit_name = pyg.gui.TextEntry("", x_draw_offset, screen_height - 100, screen_width - 2 * x_draw_offset,
+                                 color=(80, 78, 83, 255), batch=main_batch, text_color=(253, 255, 247, 255),
+                                 caret_color=(253, 255, 247))
+frame.add_widget(circuit_name)
+
+new_circuit_button = pyg.gui.PushButton(circuit_store.shape.x + circuit_entry_padding,
+                                        circuit_store.shape.y + circuit_entry_padding,
+                                        resources.button_up_image, resources.button_down_image,
+                                        batch=main_batch)
+frame.add_widget(new_circuit_button)
 
 
 key_handler = pyg.window.key.KeyStateHandler()
@@ -74,7 +100,6 @@ def update(dt):
     #     print("LMB")
     # if mouse_handler[pyg.window.mouse.RIGHT]:
     #     print("RMB")
-    if circuit_name.on_mouse_press()
     pass
 
 
